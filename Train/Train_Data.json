@@ -1,0 +1,42 @@
+[
+  {
+    "input": " Quels employés travaillent dans le département 10 et gagnent plus de 5000€ ?",
+    "output": "select * FROM employees WHERE department_id = 10 AND salary > 5000;"
+  },
+  {
+    "input": " Quels produits ont été vendus par l'employé John Doe ?",
+    "output": "SELECT products.product_name, sales.quantity_sold FROM sales INNER JOIN products ON sales.product_id = products.product_id INNER JOIN employees ON sales.employee_id = employees.employee_id WHERE employees.first_name = 'John' AND employees.last_name = 'Doe';"
+  },
+  {
+    "input": " Liste des commandes d'un client spécifique avec des informations sur les produits.",
+    "output": "SELECT orders.order_id, order_items.quantity, products.product_name FROM orders INNER JOIN order_items ON orders.order_id = order_items.order_id INNER JOIN products ON order_items.product_id = products.product_id WHERE orders.customer_id = 5;"
+  },
+  {
+    "input": " Quel est le total des ventes réalisées par l'employé numéro 3 ?",
+    "output": "SELECT SUM(sales.quantity_sold * products.price) AS total_sales FROM sales INNER JOIN products ON sales.product_id = products.product_id WHERE sales.employee_id = 3;"
+  },
+  {
+    "input": " Quels fournisseurs fournissent le produit 'Laptop' ?",
+    "output": "SELECT suppliers.supplier_name FROM suppliers INNER JOIN product_suppliers ON suppliers.supplier_id = product_suppliers.supplier_id INNER JOIN products ON product_suppliers.product_id = products.product_id WHERE products.product_name = 'Laptop';"
+  },
+  {
+    "input": " Donne-moi le nombre total de produits commandés pour chaque produit.",
+    "output": "SELECT products.product_name, SUM(order_items.quantity) AS total_quantity FROM order_items INNER JOIN products ON order_items.product_id = products.product_id GROUP BY products.product_name;"
+  },
+  {
+    "input": " Quels clients ont passé plus de 5 commandes ?",
+    "output": "SELECT customers.customer_name FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.customer_name HAVING COUNT(orders.order_id) > 5;"
+  },
+  {
+    "input": " Quels employés ont suivi une formation en 'Data Science' ?",
+    "output": "SELECT employees.first_name, employees.last_name FROM employees INNER JOIN employees_training ON employees.employee_id = employees_training.employee_id WHERE employees_training.training_name = 'Data Science';"
+  },
+  {
+    "input": " Montre-moi tous les produits en rupture de stock.",
+    "output": "SELECT * FROM products WHERE stock_quantity = 200;"
+  },
+  {
+    "input": " Quel est le montant total des commandes de chaque client ?",
+    "output": "SELECT customers.customer_name, SUM(orders.total_amount) AS total_spent FROM orders INNER JOIN customers ON orders.customer_id = customers.customer_id GROUP BY customers.customer_name;"
+  }
+]
