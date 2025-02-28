@@ -1,49 +1,40 @@
-from transformers import GPT2Tokenizer, GPT2LMHeadModel
+from transformers import AutoTokenizer, CamembertForSequenceClassification
 import torch
 
-# 📌 Charger le modèle fine-tuné et le tokenizer
-model_name = "./fine_tuned_gpt2"
-tokenizer = GPT2Tokenizer.from_pretrained(model_name)
-model = GPT2LMHeadModel.from_pretrained(model_name)
+# 🏋️ Charger le modèle et le tokenizer entraînés
+MODEL_PATH = "chemin/vers/votre_modele"  # 📌 Remplacez par le chemin réel
+tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
+model = CamembertForSequenceClassification.from_pretrained(MODEL_PATH)
 
-# 📌 Ajouter le token de padding
-tokenizer.pad_token = tokenizer.eos_token
+# Mettre le modèle en mode évaluation
+model.eval()
 
-# 📌 Fonction pour générer une requête SQL
-def generate_sql(query):
-    prompt = f"Question: {query}"  # Format structuré \nRequête SQL:
+def predict_question(question):
+    """Fait une prédiction SQL à partir d'une question en langage naturel."""
+    input_text = f"Question: {question}"
     
-    inputs = tokenizer(prompt, return_tensors="pt", padding=True, truncation=True, max_length=128)
+    # Tokenisation
+    tokens = tokenizer(input_text, truncation=True, padding="max_length", max_length=128, return_tensors="pt")
+
+    input_ids = tokens["input_ids"]
+    attention_mask = tokens["attention_mask"]
+
+    # Prédiction
+    with torch.no_grad():
+        outputs = model(input_ids, attention_mask=attention_mask)
     
-    with torch.no_grad():  
-        outputs = model.generate(
-            inputs["input_ids"],
-            attention_mask=inputs["attention_mask"],  
-            max_length=100,  
-            num_return_sequences=1,  
-            pad_token_id=tokenizer.eos_token_id
-        )
+    logits = outputs.logits
+    predicted_label = torch.argmax(logits, dim=1).item()
 
-    generated_sql = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    
-    #  Supprimer tout sauf la requête SQL
-    #if "Requête SQL:" in generated_sql:
-        #generated_sql = generated_sql.split("Requête SQL:")[-1].strip()
+    return predicted_label
 
-    #  Vérifier si le modèle a généré du SQL valide
-    if not generated_sql.strip().startswith("SELECT"):
-        return " Le modèle n'a pas généré une requête SQL correcte."
-
-    return generated_sql
-
-#  Mode interactif
-print("\n✅ Tape une question en langage naturel pour générer une requête SQL (ou 'exit' pour quitter) :")
-
+# 🔥 Mode interactif dans le terminal
+print("\n💡 Tapez une question en langage naturel (ou 'exit' pour quitter) :")
 while True:
-    user_input = input("\n🔹 Question : ")
+    user_input = input("❓ Votre question : ")
     if user_input.lower() == "exit":
         print("👋 Fin du test.")
         break
-    
-    generated_sql = generate_sql(user_input)
-    print(f"🟢 Requête SQL générée : {generated_sql}")
+
+    prediction = predict_question(user_input)
+    print(f"🎯 Prédiction du modèle : {prediction}\n")
