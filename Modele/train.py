@@ -241,7 +241,7 @@ def main():
     plot_losses(train_losses, val_losses)
 
     # Enregistrement du modèle et tokenizer
-    save_model(model, tokenizer, "trained_model")
+    save_model(model, tokenizer, "Modele/trained_model")
 
 if __name__ == "__main__":
-    main()  
+    main()
