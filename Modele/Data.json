@@ -1,0 +1,244 @@
+[
+    {
+      "input": "Quels employés travaillent dans le département 10 et gagnent plus de 5000€ ?",
+      "output": "SELECT * FROM employees WHERE department_id = 10 AND salary > 5000;"
+    },
+    {
+      "input": "Quels produits ont été vendus par l'employé John Doe ?",
+      "output": "SELECT products.product_name, sales.quantity_sold FROM sales INNER JOIN products ON sales.product_id = products.product_id INNER JOIN employees ON sales.employee_id = employees.employee_id WHERE employees.first_name = 'John' AND employees.last_name = 'Doe';"
+    },
+    {
+      "input": "Liste des commandes d'un client spécifique avec des informations sur les produits.",
+      "output": "SELECT orders.order_id, order_items.quantity, products.product_name FROM orders INNER JOIN order_items ON orders.order_id = order_items.order_id INNER JOIN products ON order_items.product_id = products.product_id WHERE orders.customer_id = 5;"
+    },
+    {
+      "input": "Quel est le total des ventes réalisées par l'employé numéro 3 ?",
+      "output": "SELECT SUM(sales.quantity_sold * products.price) AS total_sales FROM sales INNER JOIN products ON sales.product_id = products.product_id WHERE sales.employee_id = 3;"
+    },
+    {
+      "input": "Quels fournisseurs fournissent le produit 'Laptop' ?",
+      "output": "SELECT suppliers.supplier_name FROM suppliers INNER JOIN product_suppliers ON suppliers.supplier_id = product_suppliers.supplier_id INNER JOIN products ON product_suppliers.product_id = products.product_id WHERE products.product_name = 'Laptop';"
+    },
+    {
+      "input": "Donne-moi le nombre total de produits commandés pour chaque produit.",
+      "output": "SELECT products.product_name, SUM(order_items.quantity) AS total_quantity FROM order_items INNER JOIN products ON order_items.product_id = products.product_id GROUP BY products.product_name;"
+    },
+    {
+      "input": "Quels clients ont passé plus de 5 commandes ?",
+      "output": "SELECT customers.customer_name FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.customer_name HAVING COUNT(orders.order_id) > 5;"
+    },
+    {
+      "input": "Quels employés ont suivi une formation en 'Data Science' ?",
+      "output": "SELECT employees.first_name, employees.last_name FROM employees INNER JOIN employees_training ON employees.employee_id = employees_training.employee_id WHERE employees_training.training_name = 'Data Science';"
+    },
+    {
+      "input": "Montre-moi tous les produits en rupture de stock.",
+      "output": "SELECT * FROM products WHERE stock_quantity = 0;"
+    },
+    {
+      "input": "Quel est le montant total des commandes de chaque client ?",
+      "output": "SELECT customers.customer_name, SUM(orders.total_amount) AS total_spent FROM orders INNER JOIN customers ON orders.customer_id = customers.customer_id GROUP BY customers.customer_name;"
+    },
+    {
+      "input": "Quels sont les employés qui ont travaillé après le 1er janvier 2023 ?",
+      "output": "SELECT * FROM employees WHERE hire_date > '2023-01-01';"
+    },
+    {
+      "input": "Quels produits ont un prix supérieur à 100€ ?",
+      "output": "SELECT product_name FROM products WHERE price > 100;"
+    },
+    {
+      "input": "Quel est le total des ventes réalisées pour chaque produit ?",
+      "output": "SELECT products.product_name, SUM(sales.quantity_sold) AS total_sales FROM sales INNER JOIN products ON sales.product_id = products.product_id GROUP BY products.product_name;"
+    },
+    {
+      "input": "Quels produits ont une quantité en stock inférieure à 10 ?",
+      "output": "SELECT product_name FROM products WHERE stock_quantity < 10;"
+    },
+    {
+      "input": "Quels clients ont acheté un produit spécifique ?",
+      "output": "SELECT customers.customer_name FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id INNER JOIN order_items ON orders.order_id = order_items.order_id INNER JOIN products ON order_items.product_id = products.product_id WHERE products.product_name = 'Laptop';"
+    },
+    {
+      "input": "Quels produits ont été commandés après le 1er février 2025 ?",
+      "output": "SELECT products.product_name FROM products INNER JOIN order_items ON products.product_id = order_items.product_id INNER JOIN orders ON order_items.order_id = orders.order_id WHERE orders.order_date > '2025-02-01';"
+    },
+    {
+      "input": "Combien d'employés ont un salaire supérieur à 4000€ ?",
+      "output": "SELECT COUNT(*) FROM employees WHERE salary > 4000;"
+    },
+    {
+      "input": "Quels clients ont passé des commandes supérieures à 1000€ ?",
+      "output": "SELECT customers.customer_name FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id WHERE orders.total_amount > 1000;"
+    },
+    {
+      "input": "Quels produits ont été vendus par l'employé Jane Smith ?",
+      "output": "SELECT products.product_name, sales.quantity_sold FROM sales INNER JOIN products ON sales.product_id = products.product_id INNER JOIN employees ON sales.employee_id = employees.employee_id WHERE employees.first_name = 'Jane' AND employees.last_name = 'Smith';"
+    },
+    {
+      "input": "Montre-moi tous les clients de Londres.",
+      "output": "SELECT customer_name FROM customers WHERE city = 'London';"
+    },
+    {
+      "input": "Quels sont les employés du département IT ?",
+      "output": "SELECT first_name, last_name FROM employees WHERE department_id = 30;"
+    },
+    {
+      "input": "Quels produits ont été commandés par un client spécifique et à quel montant ?",
+      "output": "SELECT products.product_name, order_items.quantity, (order_items.quantity * products.price) AS total_cost FROM order_items INNER JOIN products ON order_items.product_id = products.product_id INNER JOIN orders ON order_items.order_id = orders.order_id WHERE orders.customer_id = 2;"
+    },
+    {
+      "input": "Montrer moi la liste des employés avec leur salaire.",
+      "output": "SELECT first_name, last_name, salary FROM employees;"
+    },
+    {
+      "input": "Donne-moi la liste des produits fournis par 'TechCorp'.",
+      "output": "SELECT products.product_name FROM products INNER JOIN product_suppliers ON products.product_id = product_suppliers.product_id INNER JOIN suppliers ON product_suppliers.supplier_id = suppliers.supplier_id WHERE suppliers.supplier_name = 'TechCorp';"
+    },
+    {
+      "input": "Quel est le montant total des commandes passées avant le 1er janvier 2025 ?",
+      "output": "SELECT SUM(total_amount) FROM orders WHERE order_date < '2025-01-01';"
+    },
+    {
+      "input": "Montre-moi les produits qui ont été vendus mais qui sont maintenant en rupture de stock.",
+      "output": "SELECT products.product_name FROM products INNER JOIN sales ON products.product_id = sales.product_id WHERE products.stock_quantity = 0;"
+    },
+    {
+      "input": "Liste des employés ayant suivi une formation en 'Machine Learning'.",
+      "output": "SELECT employees.first_name, employees.last_name FROM employees INNER JOIN employees_training ON employees.employee_id = employees_training.employee_id WHERE employees_training.training_name = 'Machine Learning';"
+    },
+    {
+      "input": "Quels produits ont été commandés dans les 30 derniers jours ?",
+      "output": "SELECT products.product_name FROM products INNER JOIN order_items ON products.product_id = order_items.product_id INNER JOIN orders ON order_items.order_id = orders.order_id WHERE orders.order_date > DATE('now', '-30 days');"
+    },
+    {
+      "input": "Quels employés ont gagné plus de 5000€ et travaillent dans le département des ventes ?",
+      "output": "SELECT first_name, last_name FROM employees WHERE salary > 5000 AND department_id = 10;"
+    },
+    {
+      "input": "Liste des commandes avec leur montant total.",
+      "output": "SELECT order_id, total_amount FROM orders;"
+    },
+    {
+      "input": "Quels sont les produits dont le prix est supérieur à 100€ et dont le stock est inférieur à 50 ?",
+      "output": "SELECT product_name FROM products WHERE price > 100 AND stock_quantity < 50;"
+    },
+    {
+      "input": "Donne-moi la liste des clients qui ont commandé après le 1er mars 2025.",
+      "output": "SELECT customers.customer_name FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id WHERE orders.order_date > '2025-03-01';"
+    },
+    {
+      "input": "Quels employés ont suivi une formation en 'Data Science' en 2025 ?",
+      "output": "SELECT employees.first_name, employees.last_name FROM employees INNER JOIN employees_training ON employees.employee_id = employees_training.employee_id WHERE employees_training.training_name = 'Data Science' AND employees_training.completion_date LIKE '2025%';"
+    },
+    {
+      "input": "Quels sont les produits ayant un stock de 0 mais ayant été commandés ?",
+      "output": "SELECT products.product_name FROM products INNER JOIN order_items ON products.product_id = order_items.product_id WHERE products.stock_quantity = 0;"
+    },
+    {
+      "input": "Quel est le produit le plus vendu ?",
+      "output": "SELECT products.product_name, SUM(sales.quantity_sold) AS total_sales FROM sales INNER JOIN products ON sales.product_id = products.product_id GROUP BY products.product_name ORDER BY total_sales DESC LIMIT 1;"
+    },
+    {
+      "input": "Quels employés ont suivi des formations entre janvier et mars 2025 ?",
+      "output": "SELECT employees.first_name, employees.last_name FROM employees INNER JOIN employees_training ON employees.employee_id = employees_training.employee_id WHERE employees_training.completion_date BETWEEN '2025-01-01' AND '2025-03-31';"
+    },
+  
+    {
+      "input": "Quels employés travaillent dans le département RH ?",
+      "output": "SELECT first_name, last_name FROM employees WHERE department_id = (SELECT department_id FROM departments WHERE department_name = 'RH');"
+    },
+    {
+      "input": "Quel est le montant total des commandes pour chaque mois de l'année 2025 ?",
+      "output": "SELECT strftime('%Y-%m', order_date) AS month, SUM(total_amount) AS total_sales FROM orders WHERE order_date LIKE '2025%' GROUP BY month;"
+    },
+    {
+      "input": "Quels sont les produits commandés par au moins 3 clients différents ?",
+      "output": "SELECT products.product_name FROM products INNER JOIN order_items ON products.product_id = order_items.product_id INNER JOIN orders ON order_items.order_id = orders.order_id GROUP BY products.product_name HAVING COUNT(DISTINCT orders.customer_id) >= 3;"
+    },
+    {
+      "input": "Quels employés ont un salaire inférieur à 2000€ ?",
+      "output": "SELECT first_name, last_name FROM employees WHERE salary < 2000;"
+    },
+    {
+      "input": "Quel est le nombre moyen de produits par commande ?",
+      "output": "SELECT AVG(quantity) AS avg_products_per_order FROM order_items;"
+    },
+    {
+      "input": "Quels clients n'ont jamais passé de commande ?",
+      "output": "SELECT customer_name FROM customers WHERE customer_id NOT IN (SELECT DISTINCT customer_id FROM orders);"
+    },
+    {
+      "input": "Quels fournisseurs ont livré des produits entre janvier et juin 2024 ?",
+      "output": "SELECT DISTINCT suppliers.supplier_name FROM suppliers INNER JOIN product_suppliers ON suppliers.supplier_id = product_suppliers.supplier_id INNER JOIN products ON product_suppliers.product_id = products.product_id INNER JOIN order_items ON products.product_id = order_items.product_id INNER JOIN orders ON order_items.order_id = orders.order_id WHERE orders.order_date BETWEEN '2024-01-01' AND '2024-06-30';"
+    },
+    {
+      "input": "Quels sont les 3 clients qui ont dépensé le plus ?",
+      "output": "SELECT customers.customer_name, SUM(orders.total_amount) AS total_spent FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.customer_name ORDER BY total_spent DESC LIMIT 3;"
+    },
+    {
+      "input": "Quels produits ont un prix compris entre 20€ et 50€ et sont en stock ?",
+      "output": "SELECT product_name FROM products WHERE price BETWEEN 20 AND 50 AND stock_quantity > 0;"
+    },
+    {
+      "input": "Quels employés n'ont pas encore suivi de formation ?",
+      "output": "SELECT first_name, last_name FROM employees WHERE employee_id NOT IN (SELECT DISTINCT employee_id FROM employees_training);"
+    },
+    {
+      "input": "Quels clients ont commandé plus de 5 produits différents ?",
+      "output": "SELECT customers.customer_name FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id INNER JOIN order_items ON orders.order_id = order_items.order_id GROUP BY customers.customer_name HAVING COUNT(DISTINCT order_items.product_id) > 5;"
+    },
+    {
+      "input": "Quels sont les 10 employés les mieux payés ?",
+      "output": "SELECT first_name, last_name, salary FROM employees ORDER BY salary DESC LIMIT 10;"
+    },
+    {
+      "input": "Quels produits n'ont jamais été commandés ?",
+      "output": "SELECT product_name FROM products WHERE product_id NOT IN (SELECT DISTINCT product_id FROM order_items);"
+    },
+    {
+      "input": "Quel est le chiffre d'affaires mensuel pour l'année 2024 ?",
+      "output": "SELECT strftime('%Y-%m', order_date) AS month, SUM(total_amount) AS total_revenue FROM orders WHERE order_date LIKE '2024%' GROUP BY month;"
+    },
+    {
+      "input": "Quels sont les employés ayant une ancienneté de plus de 10 ans ?",
+      "output": "SELECT first_name, last_name FROM employees WHERE hire_date < DATE('now', '-10 years');"
+    },
+    {
+      "input": "Quels sont les produits les plus vendus en volume ?",
+      "output": "SELECT products.product_name, SUM(order_items.quantity) AS total_sold FROM order_items INNER JOIN products ON order_items.product_id = products.product_id GROUP BY products.product_name ORDER BY total_sold DESC LIMIT 10;"
+    },
+    {
+      "input": "Quels fournisseurs n'ont pas fourni de produits en 2024 ?",
+      "output": "SELECT supplier_name FROM suppliers WHERE supplier_id NOT IN (SELECT DISTINCT supplier_id FROM product_suppliers INNER JOIN products ON product_suppliers.product_id = products.product_id INNER JOIN order_items ON products.product_id = order_items.product_id INNER JOIN orders ON order_items.order_id = orders.order_id WHERE orders.order_date LIKE '2024%');"
+    },
+    {
+      "input": "Quel est le client ayant passé le plus grand nombre de commandes ?",
+      "output": "SELECT customers.customer_name, COUNT(orders.order_id) AS order_count FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id GROUP BY customers.customer_name ORDER BY order_count DESC LIMIT 1;"
+    },
+    {
+      "input": "Quels sont les 5 produits les plus chers ?",
+      "output": "SELECT product_name, price FROM products ORDER BY price DESC LIMIT 5;"
+    },
+    {
+      "input": "Quels sont les clients qui ont commandé chaque mois en 2024 ?",
+      "output": "SELECT DISTINCT customers.customer_name, strftime('%Y-%m', orders.order_date) AS month FROM customers INNER JOIN orders ON customers.customer_id = orders.customer_id WHERE orders.order_date LIKE '2024%' ORDER BY month;"
+    },
+    {
+      "input": "Quels sont les employés qui ont géré plus de 50 commandes ?",
+      "output": "SELECT employees.first_name, employees.last_name, COUNT(orders.order_id) AS total_orders FROM employees INNER JOIN orders ON employees.employee_id = orders.employee_id GROUP BY employees.first_name, employees.last_name HAVING COUNT(orders.order_id) > 50;"
+    },
+    {
+      "input": "Quels clients n'ont pas commandé en 2024 ?",
+      "output": "SELECT customer_name FROM customers WHERE customer_id NOT IN (SELECT DISTINCT customer_id FROM orders WHERE order_date LIKE '2024%');"
+    },
+    {
+      "input": "Quels employés ont un salaire inférieur à la moyenne ?",
+      "output": "SELECT first_name, last_name, salary FROM employees WHERE salary < (SELECT AVG(salary) FROM employees);"
+    },
+    {
+      "input": "Quel est le montant moyen des commandes en 2024 ?",
+      "output": "SELECT AVG(total_amount) AS average_order_value FROM orders WHERE order_date LIKE '2024%';"
+    }
+]
+  
